@@ -1,6 +1,6 @@
 import { BuildingType } from "./buildingType.js";
 import { CommercialZone } from "./zones/commercial.js";
-import { ResidentialZone } from "./zones/residential.js";
+import { ResidentialBuilding } from "./zones/residential.js";
 import { IndustrialZone } from "./zones/industrial.js";
 import { Road } from "./transportation/road.js";
 import { Building } from "./building.js";
@@ -15,7 +15,7 @@ import { Building } from "./building.js";
 export function createBuilding(x, y, type) {
   switch (type) {
     case BuildingType.residential:
-      return new ResidentialZone();
+      return new ResidentialBuilding();
     case BuildingType.commercial:
       return new CommercialZone();
     case BuildingType.industrial:

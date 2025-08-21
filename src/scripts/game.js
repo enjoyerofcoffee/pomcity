@@ -156,7 +156,11 @@ export class Game {
     if (window.ui.isPaused) return;
 
     // Update the city data model first, then update the scene
-    this.city.simulate(1);
+
+    if (window.ui.nextStep) {
+      window.ui.nextStep = false;
+      this.city.simulate(1);
+    }
 
     window.ui.updateTitleBar(this);
     window.ui.updateInfoPanel(this.selectedObject);

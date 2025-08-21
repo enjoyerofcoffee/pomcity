@@ -1,12 +1,6 @@
 export default {
   modules: {
     development: {
-      // Number of simulation cycles the road must fail the abandonment
-      // criteria before it has a chance of becoming abandoned
-      abandonThreshold: 10,
-      // Probability of building being abandoned after it has met the
-      // abandonment criteria for 'delay' cycles
-      abandonChance: 0.25,
       // Number of days it takes to build a building
       constructionTime: 3,
       // Probability of a building leveling up

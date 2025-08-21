@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import gsap from "gsap";
 
 // -- Constants --
 const DEG2RAD = Math.PI / 180.0;
@@ -19,6 +20,8 @@ const ZOOM_SENSITIVITY = 0.002;
 const PAN_SENSITIVITY = -0.01;
 
 const Y_AXIS = new THREE.Vector3(0, 1, 0);
+
+let movement = { w: false, s: false, a: false, d: false };
 
 export class CameraManager {
   constructor() {
@@ -57,6 +60,12 @@ export class CameraManager {
       this.onMouseMove.bind(this),
       false
     );
+    window.document.addEventListener(
+      "keydown",
+      this.onKeyDown.bind(this),
+      false
+    );
+    window.document.addEventListener("keyup", this.onKeyUp.bind(this), false);
   }
 
   /**
@@ -74,9 +83,77 @@ export class CameraManager {
       Math.cos(this.cameraAzimuth * DEG2RAD) *
       Math.cos(this.cameraElevation * DEG2RAD);
     this.camera.position.add(this.cameraOrigin);
+    this.camera.position.lerp(this.cameraOrigin, 0.2);
     this.camera.lookAt(this.cameraOrigin);
     this.camera.updateProjectionMatrix();
     this.camera.updateMatrixWorld();
+  }
+
+  onKeyDown(event) {
+    const key = event.key;
+
+    if (key === "w") {
+      movement = { ...movement, w: true };
+    }
+    if (key === "s") {
+      movement = { ...movement, s: true };
+    }
+    if (key === "a") {
+      movement = { ...movement, a: true };
+    }
+    if (key === "d") {
+      movement = { ...movement, d: true };
+    }
+
+    this.updateKeyboardMovement();
+  }
+
+  onKeyUp(event) {
+    const key = event.key;
+
+    if (key === "w") {
+      movement = { ...movement, w: false };
+    }
+    if (key === "s") {
+      movement = { ...movement, s: false };
+    }
+    if (key === "a") {
+      movement = { ...movement, a: false };
+    }
+    if (key === "d") {
+      movement = { ...movement, d: false };
+    }
+
+    this.updateKeyboardMovement();
+  }
+
+  updateKeyboardMovement() {
+    const { w, a, s, d } = movement;
+
+    const newTarget = this.cameraOrigin.clone();
+    if (w) {
+      newTarget.y += 0.5;
+    }
+    if (s) {
+      newTarget.y += -0.5;
+    }
+    if (a) {
+      newTarget.x += 0.5;
+    }
+    if (d) {
+      newTarget.x += -0.5;
+    }
+
+    gsap.to(this.cameraOrigin, {
+      x: newTarget.x,
+      y: newTarget.y,
+      z: newTarget.z,
+      duration: 0.2,
+      ease: "power2.out",
+      onUpdate: () => {
+        this.updateCameraPosition();
+      },
+    });
   }
 
   /**

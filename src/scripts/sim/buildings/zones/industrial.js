@@ -1,7 +1,6 @@
-import { City } from '../../city.js';
-import { JobsModule } from '../modules/jobs.js';
-import { BuildingType } from '../buildingType.js';
-import { Zone } from './zone.js';
+import { City } from "../../city.js";
+import { BuildingType } from "../buildingType.js";
+import { Zone } from "./zone.js";
 
 export class IndustrialZone extends Zone {
   /**
@@ -17,7 +16,7 @@ export class IndustrialZone extends Zone {
 
   /**
    * Steps the state of the zone forward in time by one simulation step
-   * @param {City} city 
+   * @param {City} city
    */
   simulate(city) {
     super.simulate(city);
@@ -44,15 +43,38 @@ export class IndustrialZone extends Zone {
 }
 
 // Arrays of words for generating business names
-const prefixes = ['Apex', 'Vortex', 'Elevate', 'Zenith', 'Nova', 'Synapse', 'Pulse', 'Enigma', 'Catalyst', 'Axiom'];
-const suffixes = ['Dynamics', 'Ventures', 'Solutions', 'Technologies', 'Innovations', 'Industries', 'Enterprises', 'Systems', 'Mechanics', 'Manufacturing'];
-const businessSuffixes = ['LLC', 'Inc.', 'Co.', 'Corp.', 'Ltd.'];
+const prefixes = [
+  "Apex",
+  "Vortex",
+  "Elevate",
+  "Zenith",
+  "Nova",
+  "Synapse",
+  "Pulse",
+  "Enigma",
+  "Catalyst",
+  "Axiom",
+];
+const suffixes = [
+  "Dynamics",
+  "Ventures",
+  "Solutions",
+  "Technologies",
+  "Innovations",
+  "Industries",
+  "Enterprises",
+  "Systems",
+  "Mechanics",
+  "Manufacturing",
+];
+const businessSuffixes = ["LLC", "Inc.", "Co.", "Corp.", "Ltd."];
 
 // Function to generate a random industrial business name
 function generateBusinessName() {
   const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
   const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
-  const businessSuffix = businessSuffixes[Math.floor(Math.random() * businessSuffixes.length)];
+  const businessSuffix =
+    businessSuffixes[Math.floor(Math.random() * businessSuffixes.length)];
 
-  return prefix + ' ' + suffix + ' ' + businessSuffix;
+  return prefix + " " + suffix + " " + businessSuffix;
 }

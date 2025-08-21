@@ -30,13 +30,16 @@
             <img id="population-icon" src="/icons/person.png" />
             <span id="population-counter">0</span>
           </div>
+          <div class="title-bar-right-items title-bar-items">
+            <button id="next-step" onclick="ui.onNextStep()">next step</button>
+          </div>
         </div>
         <div id="ui-toolbar" class="container">
           <button
             id="button-select"
             class="ui-button selected"
             data-type="select"
-            onclick="ui.onToolSelected(event)"
+            onclick="ui.c(event)"
           >
             <img class="toolbar-icon" src="/icons/select-color.png" />
           </button>

@@ -1,7 +1,8 @@
-import config from '../../../config.js';
-import { City } from '../../city.js';
-import { Building } from '../building.js';
-import { SimModule } from './simModule.js';
+import config from "../../../config.js";
+import { City } from "../../city.js";
+import { Building } from "../building.js";
+import { BuildingType } from "../buildingType.js";
+import { SimModule } from "./simModule.js";
 
 /**
  * Logic for determining whether or not a tile has road access
@@ -22,27 +23,33 @@ export class RoadAccessModule extends SimModule {
   value;
 
   /**
-   * @param {Building} building 
+   * @param {Building} building
    */
   constructor(building) {
     super();
+
     this.building = building;
+
+    if (this.building.type === BuildingType.road) {
+      this.value = true;
+    }
   }
 
   /**
    * Updates the state of this attribute
-   * @param {City} city 
+   * @param {City} city
    */
   simulate(city) {
     if (!this.enabled) {
       this.value = true;
     } else {
       const road = city.findTile(
-        this.building, 
-        (tile) => tile.building?.type === 'road', 
-        config.modules.roadAccess.searchDistance);
+        this.building,
+        (tile) => tile.building?.type === "road",
+        config.modules.roadAccess.searchDistance
+      );
 
-      this.value = (road !== null);
+      this.value = road !== null;
     }
   }
 }

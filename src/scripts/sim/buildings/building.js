@@ -14,7 +14,6 @@ export class Building extends SimObject {
    * @type {boolean}
    */
   hideTerrain = false;
-  roadAccess = new RoadAccessModule(this);
   /**
    * The current status of the building
    * @type {string}
@@ -33,6 +32,14 @@ export class Building extends SimObject {
     this.#statusIcon.layers.set(1);
     this.#statusIcon.scale.set(0.5, 0.5, 0.5);
     this.add(this.#statusIcon);
+
+    this.roadAccess = new RoadAccessModule(this);
+
+    if (!this.roadAccess.value) {
+      this.setStatus(BuildingStatus.NoRoadAccess);
+    } else {
+      this.setStatus(null);
+    }
   }
 
   /**

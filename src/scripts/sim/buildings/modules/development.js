@@ -4,7 +4,6 @@ import { Zone } from "../../buildings/zones/zone.js";
 import { SimModule } from "./simModule.js";
 
 export const DevelopmentState = {
-  abandoned: "abandoned",
   developed: "developed",
   underConstruction: "under-construction",
   undeveloped: "undeveloped",
@@ -99,29 +98,6 @@ export class DevelopmentModule extends SimModule {
           this.state = DevelopmentState.developed;
           this.level = 1;
           this.#constructionCounter = 0;
-        }
-        break;
-      case DevelopmentState.developed:
-        if (
-          this.#abandonmentCounter > config.modules.development.abandonThreshold
-        ) {
-          if (Math.random() < config.modules.development.abandonChance) {
-            this.state = DevelopmentState.abandoned;
-          }
-        } else {
-          if (
-            this.level < this.maxLevel &&
-            Math.random() < config.modules.development.levelUpChance
-          ) {
-            this.level++;
-          }
-        }
-        break;
-      case DevelopmentState.abandoned:
-        if (this.#abandonmentCounter == 0) {
-          if (Math.random() < config.modules.development.redevelopChance) {
-            this.state = DevelopmentState.developed;
-          }
         }
         break;
     }

@@ -1,5 +1,4 @@
-import * as THREE from 'three';
-import { SimModule } from './buildings/modules/simModule';
+import * as THREE from "three";
 
 const SELECTED_COLOR = 0xaaaa55;
 const HIGHLIGHTED_COLOR = 0x555555;
@@ -16,12 +15,12 @@ export class SimObject extends THREE.Object3D {
   #worldPos = new THREE.Vector3();
 
   /**
-   * @param {number} x The x-coordinate of the object 
+   * @param {number} x The x-coordinate of the object
    * @param {number} y The y-coordinate of the object
    */
   constructor(x = 0, y = 0) {
     super();
-    this.name = 'SimObject';
+    this.name = "SimObject";
     this.position.x = x;
     this.position.z = y;
   }
@@ -41,7 +40,7 @@ export class SimObject extends THREE.Object3D {
    */
   get mesh() {
     return this.#mesh;
-  } 
+  }
 
   /**
    * @type {THREE.Mesh} value
@@ -63,7 +62,7 @@ export class SimObject extends THREE.Object3D {
 
   /**
    * Updates the state of this object by one simulation step
-   * @param {City} city 
+   * @param {City} city
    */
   simulate(city) {
     // Override in subclass
@@ -86,8 +85,8 @@ export class SimObject extends THREE.Object3D {
   }
 
   /**
-   * Sets the emission color of the mesh 
-   * @param {number} color 
+   * Sets the emission color of the mesh
+   * @param {number} color
    */
   #setMeshEmission(color) {
     if (!this.mesh) return;
@@ -102,6 +101,6 @@ export class SimObject extends THREE.Object3D {
       if (obj.material) {
         obj.material?.dispose();
       }
-    })
+    });
   }
 }

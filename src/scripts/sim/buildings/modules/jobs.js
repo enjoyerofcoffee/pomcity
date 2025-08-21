@@ -1,9 +1,8 @@
-import config from '../../../config.js';
-import { Citizen } from '../../citizen.js';
-import { City } from '../../city.js';
-import { Zone } from '../../buildings/zones/zone.js';
-import { DevelopmentState } from './development.js';
-import { SimModule } from './simModule.js';
+import config from "../../../config.js";
+import { City } from "../../city.js";
+import { Zone } from "../../buildings/zones/zone.js";
+import { DevelopmentState } from "./development.js";
+import { SimModule } from "./simModule.js";
 
 export class JobsModule extends SimModule {
   /**
@@ -30,7 +29,10 @@ export class JobsModule extends SimModule {
     if (this.#zone.development.state !== DevelopmentState.developed) {
       return 0;
     } else {
-      return Math.pow(config.modules.jobs.maxWorkers, this.#zone.development.level);
+      return Math.pow(
+        config.modules.jobs.maxWorkers,
+        this.#zone.development.level
+      );
     }
   }
 
@@ -52,15 +54,9 @@ export class JobsModule extends SimModule {
 
   /**
    * Steps the state of the zone forward in time by one simulation step
-   * @param {City} city 
+   * @param {City} city
    */
-  simulate(city) {
-    // If building is abandoned, all workers are laid off and no
-    // more workers are allowed to work here
-    if (this.#zone.development.state === DevelopmentState.abandoned) {
-      this.#layOffWorkers();
-    }
-  }
+  simulate(city) {}
 
   /**
    * Lay off all existing workers
@@ -90,7 +86,7 @@ export class JobsModule extends SimModule {
     for (const worker of this.workers) {
       html += worker.toHTML();
     }
-    html += '</ul>';
+    html += "</ul>";
 
     return html;
   }

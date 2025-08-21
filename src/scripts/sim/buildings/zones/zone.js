@@ -40,15 +40,6 @@ export class Zone extends Building {
 
     let mesh = window.assetManager.getModel(modelName, this);
 
-    // Tint building a dark color if it is abandoned
-    if (this.development.state === DevelopmentState.abandoned) {
-      mesh.traverse((obj) => {
-        if (obj.material) {
-          obj.material.color = new THREE.Color(0x707070);
-        }
-      });
-    }
-
     this.setMesh(mesh);
   }
 
