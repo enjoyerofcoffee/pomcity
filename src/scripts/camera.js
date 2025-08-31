@@ -132,16 +132,16 @@ export class CameraManager {
 
     const newTarget = this.cameraOrigin.clone();
     if (w) {
-      newTarget.y += 0.5;
+      newTarget.y += 1;
     }
     if (s) {
-      newTarget.y += -0.5;
+      newTarget.y += -1;
     }
     if (a) {
-      newTarget.x += 0.5;
+      newTarget.x += 1;
     }
     if (d) {
-      newTarget.x += -0.5;
+      newTarget.x += -1;
     }
 
     gsap.to(this.cameraOrigin, {

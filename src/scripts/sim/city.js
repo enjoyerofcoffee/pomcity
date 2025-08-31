@@ -109,17 +109,14 @@ export class City extends THREE.Group {
    * Step the simulation forward by one step
    * @type {number} steps Number of steps to simulate forward in time
    */
-  simulate(steps = 1) {
-    let count = 0;
-    while (count++ < steps) {
-      // Update services
-      this.services.forEach((service) => service.simulate(this));
+  simulate() {
+    // Update services
+    this.services.forEach((service) => service.simulate(this));
 
-      // Update each building
-      for (let x = 0; x < this.size; x++) {
-        for (let y = 0; y < this.size; y++) {
-          this.getTile(x, y).simulate(this);
-        }
+    // Update each building
+    for (let x = 0; x < this.size; x++) {
+      for (let y = 0; y < this.size; y++) {
+        this.getTile(x, y).simulate(this);
       }
     }
     this.simTime++;
@@ -137,8 +134,10 @@ export class City extends THREE.Group {
 
     // If the tile doesnt' already have a building, place one there
     if (tile && !tile.building) {
-      tile.setBuilding(createBuilding(x, y, buildingType));
+      const building = createBuilding(x, y, buildingType);
+      tile.setBuilding(building);
       tile.refreshView(this);
+      this.simulate();
 
       // Update buildings on adjacent tile in case they need to
       // change their mesh (e.g. roads)

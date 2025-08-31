@@ -1,13 +1,11 @@
 import { City } from "../../city.js";
 import { Zone } from "./zone.js";
-import { JobsModule } from "../modules/jobs.js";
 import { BuildingType } from "../buildingType.js";
 
 export class CommercialZone extends Zone {
   /**
    * @type {JobsModule}
    */
-  jobs = new JobsModule(this);
 
   constructor(x, y) {
     super(x, y);
@@ -21,14 +19,12 @@ export class CommercialZone extends Zone {
    */
   simulate(city) {
     super.simulate(city);
-    this.jobs.simulate();
   }
 
   /**
    * Handles any clean up needed before a building is removed
    */
   dispose() {
-    this.jobs.dispose();
     super.dispose();
   }
 
@@ -38,7 +34,6 @@ export class CommercialZone extends Zone {
    */
   toHTML() {
     let html = super.toHTML();
-    html += this.jobs.toHTML();
     return html;
   }
 }

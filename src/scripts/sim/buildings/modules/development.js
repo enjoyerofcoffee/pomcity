@@ -100,6 +100,22 @@ export class DevelopmentModule extends SimModule {
           this.#constructionCounter = 0;
         }
         break;
+      case DevelopmentState.developed:
+        if (
+          this.#abandonmentCounter > config.modules.development.abandonThreshold
+        ) {
+          if (Math.random() < config.modules.development.abandonChance) {
+            this.state = DevelopmentState.abandoned;
+          }
+        } else {
+          if (
+            this.level < this.maxLevel &&
+            Math.random() < config.modules.development.levelUpChance
+          ) {
+            this.level++;
+          }
+        }
+        break;
     }
   }
 

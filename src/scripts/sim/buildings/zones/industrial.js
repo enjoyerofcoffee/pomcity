@@ -6,7 +6,6 @@ export class IndustrialZone extends Zone {
   /**
    * @type {JobsModule}
    */
-  jobs = new JobsModule(this);
 
   constructor(x, y) {
     super(x, y);
@@ -20,14 +19,12 @@ export class IndustrialZone extends Zone {
    */
   simulate(city) {
     super.simulate(city);
-    this.jobs.simulate();
   }
 
   /**
    * Handles any clean up needed before a building is removed
    */
   dispose() {
-    this.jobs.dispose();
     super.dispose();
   }
 
@@ -37,7 +34,6 @@ export class IndustrialZone extends Zone {
    */
   toHTML() {
     let html = super.toHTML();
-    html += this.jobs.toHTML();
     return html;
   }
 }

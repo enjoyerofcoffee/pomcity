@@ -2,7 +2,7 @@ export default {
   modules: {
     development: {
       // Number of days it takes to build a building
-      constructionTime: 3,
+      constructionTime: 1,
       // Probability of a building leveling up
       levelUpChance: 0.05,
       // Probability of building being re-developed after it is no longer

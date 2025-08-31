@@ -159,7 +159,7 @@ export class Game {
 
     if (window.ui.nextStep) {
       window.ui.nextStep = false;
-      this.city.simulate(1);
+      this.city.simulate();
     }
 
     window.ui.updateTitleBar(this);
