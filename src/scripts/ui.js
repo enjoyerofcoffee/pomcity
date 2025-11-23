@@ -2,6 +2,7 @@ import { Game } from "./game";
 import { SimObject } from "./sim/simObject";
 import playIconUrl from "/icons/play-color.png";
 import pauseIconUrl from "/icons/pause-color.png";
+import PomodoroTimer from "./pomodoro";
 
 export class GameUI {
   /**
@@ -21,6 +22,8 @@ export class GameUI {
 
   nextStep = false;
 
+  pomodoro = null;
+
   get gameWindow() {
     return document.getElementById("render-target");
   }
@@ -33,8 +36,58 @@ export class GameUI {
     document.getElementById("loading").style.visibility = "hidden";
   }
 
-  onNextStep() {
+  onStart() {
+    document.getElementById("start").textContent = "Pause";
+
+    if (this.pomodoro && this.pomodoro.running()) {
+      this.pomodoro.pause();
+      document.getElementById("start").textContent = "Start";
+      return;
+    }
+
+    if (!this.pomodoro) {
+      this.pomodoro = new PomodoroTimer({
+        taskName: "Write blog post",
+        workDuration: 5, // short values for testing
+        shortBreak: 3,
+        longBreak: 7,
+        sessionsBeforeLongBreak: 2,
+      });
+
+      this.pomodoro.start();
+    }
+
+    this.pomodoro.onTick = (remaining, mode) => {
+      document.getElementById("time").textContent = remaining;
+    };
+
+    this.pomodoro.onSegmentStart = (mode, ctx) => {
+      console.log(
+        `Started ${mode} for "${ctx.taskName}" (session ${ctx.currentSession})`
+      );
+    };
+
+    this.pomodoro.onSegmentEnd = (mode, ctx) => {
+      console.log(
+        `Ended ${mode}. Completed work sessions: ${ctx.totalWorkSessions}`
+      );
+    };
+
+    this.pomodoro.onAwaitContinue = (nextMode, ctx) => {
+      console.log(`Awaiting confirmation… Continue with: ${nextMode}?`);
+      // In a real UI, show buttons. For demo, auto-continue after 2s:
+      setTimeout(() => timer.continue(), 2000);
+    };
+
+    this.pomodoro.resume();
+    // You can call timer.pause(), timer.resume(), timer.stop(), timer.reset() from UI controls.
     this.nextStep = true;
+  }
+
+  onStop() {
+    this.pomodoro.stop();
+    document.getElementById("time").textContent = 0;
+    delete this.pomodoro;
   }
 
   /**
